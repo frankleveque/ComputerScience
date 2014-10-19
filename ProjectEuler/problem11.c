@@ -1,6 +1,7 @@
 /**
- * 
- * @brief Solves the 11th problem of project euler using C. 
+ * \author Frank Leveque
+ *
+ * \brief Solves the 11th problem of project euler using C. 
  *
  * Stores the given grid of numbers in a 2d array and iterates through it. 
  * Each iteration it checks the element's neighbors in 4 directions:
