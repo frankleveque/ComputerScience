@@ -1,14 +1,16 @@
 /**
- * \author Frank Leveque
+ * @file 
  *
- * \brief Solves the 11th problem of project euler using C. 
+ * @author Frank Leveque
+ *
+ * @brief Solves the 11th problem of Project Euler using C. 
  *
  * Stores the given grid of numbers in a 2d array and iterates through it. 
  * Each iteration it checks the element's neighbors in 4 directions:
  * right, down, horizontal-down-left and horizontal-down-right
  * and stores the highest value it finds before finally printing it. 
  *
- *\code
+ * @code
 In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
 
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -36,7 +38,7 @@ The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
 
 What is the greatest product of four adjacent numbers in the same direction
 (up, down, left, right, or diagonally) in the 20×20 grid?
-\endcode
+ * @endcode
  *
  */
 
