@@ -1,7 +1,7 @@
 /*
 HexConverter - Tool for converting into and from hexadecimal
 ===========================================================================
-Copyright Â© 2014 Frank Leveque
+Copyright © 2014 Frank Leveque
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
-#include "hexconverter.hpp"
+#include <hexconverter.hpp>
 #include <bitset>
 #include <iostream>
 
@@ -77,8 +77,7 @@ std::string HexConverter::encodeIntoUpperCase(const std::string &input)
 std::string HexConverter::encoder(const std::string &input)
 {
     ss.str("");
-    for(unsigned int i=0; i<input.size(); ++i)
-    {
+    for(unsigned int i=0; i<input.size(); ++i) {
         std::bitset<8> temp(input[i]);
         std::bitset<4> firstPart;
         std::bitset<4> secondPart;
@@ -100,10 +99,8 @@ std::string HexConverter::encoder(const std::string &input)
 //! find a value in hextable and return its position
 int HexConverter::findHex(char hexval)
 {
-    for(unsigned int i=0; i<hexTable.size(); ++i)
-    {
-        if(hexTable[i] == hexval)
-        {
+    for(unsigned int i=0; i<hexTable.size(); ++i) {
+        if(hexTable[i] == hexval) {
             return i;
         }
     }
@@ -116,17 +113,14 @@ std::string HexConverter::decodeFromHex(const std::string &input)
     ss.str("");
     std::vector<bool> bits;
 
-    for(unsigned int i=0; i<input.size(); ++i)
-    {
+    for(unsigned int i=0; i<input.size(); ++i) {
         std::bitset<4> holding(findHex(input[i]));
-        for(int j=3; j>=0; --j)
-        {
+        for(int j=3; j>=0; --j) {
             bits.push_back(holding[j]);
         }
     }
 
-    for(unsigned int k=0; k<bits.size(); k+=8)
-    {
+    for(unsigned int k=0; k<bits.size(); k+=8) {
         std::bitset<8> whole(0);
 
         whole[7] = bits[k+0];

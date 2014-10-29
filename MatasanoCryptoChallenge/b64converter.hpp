@@ -1,5 +1,5 @@
 /*
-HexConverter - Tool for converting into and from hexadecimal
+B64Converter - Tool for converting into and from base 64
 ===========================================================================
 Copyright © 2014 Frank Leveque
 
@@ -18,25 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
-#ifndef HEXCONVERTER_HPP
-#define HEXCONVERTER_HPP
+#ifndef B64CONVERTER_HPP
+#define B64CONVERTER_HPP
 
-#include <vector>
 #include <string>
 #include <sstream>
 
-class HexConverter
+class Base64Converter
 {
 private:
-    std::vector<char> hexTable;
-    std::string encoder(const std::string &input);
-    std::stringstream ss;
-    int findHex(char hexval);
+    const char *base64chars =  {"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
+    std::stringstream returnString;
 public:
-    HexConverter();
-    ~HexConverter();
-    std::string encodeIntoLowerCase(const std::string &input);
-    std::string encodeIntoUpperCase(const std::string &input);
-    std::string decodeFromHex(const std::string &input);
+    Base64Converter();
+    ~Base64Converter();
+    std::string encodeIntoBase64(const std::string &input);
+    std::string decodeFromBase64(const std::string &input);
 };
 #endif
