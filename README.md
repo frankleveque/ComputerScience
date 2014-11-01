@@ -10,7 +10,7 @@ Conventions:
 - Doxygen comments where supported
 - K&R style formatting 
 - Java filenames begin with a capital letter.
-    -Java filenames that start with a lowercase letter can cause problems during
+    - Java filenames that start with a lowercase letter can cause problems during
 packaging. 
 - Other filenames are all lowercase.
 - Use .hpp instead of .h for C++ headers
