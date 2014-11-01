@@ -22,3 +22,5 @@ packaging.
 - Try to keep to 80 character lines. 
 - Use `#include <file.h>` over `#include "file.h"` in accordance with JSF AV Rule 33 
 - Classes always begin with a capital and use camel case.
+- No tabs, only spaces
+- 4 spaces per indent
