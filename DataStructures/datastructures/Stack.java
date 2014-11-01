@@ -10,15 +10,15 @@ public class Stack extends DoubleLinkedList {
 
     public Object top(){ 
         if(head==null)
-        	return null;
-        
+            return null;
+
         return tail.obj;
     }
 
     public Object pop(){
         if(head==null)
             return null;
-        
+
         return removeLast();
     }
 

@@ -22,7 +22,7 @@ class Node{
  * @creator Frank Leveque
  */
 public class DoubleLinkedList{
-	
+
     public Node head = null;
     public Node tail = null;
 
@@ -49,7 +49,7 @@ public class DoubleLinkedList{
             tail = temp;
         }
     } 
-    
+
     public Object removeNode(Node node){
         Object temp = node.obj;
         if(head==null)
@@ -77,11 +77,11 @@ public class DoubleLinkedList{
     public Object removeFirst(){
         return removeNode(head);
     }
-    
+
     public Object removeLast(){
         return removeNode(tail);
     }
-    
+
     public void printForwards(){
         if(head==null){
             return;
@@ -95,7 +95,7 @@ public class DoubleLinkedList{
             }
         }
     }
-    
+
     public void printBackwards(){
         if(tail==null){
             return;
