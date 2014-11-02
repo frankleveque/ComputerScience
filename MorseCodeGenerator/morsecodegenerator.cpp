@@ -1,3 +1,13 @@
+/**
+ * @file
+ * @author Frank Leveque
+ * @brief Morse Code Generator
+ * @details Takes a string input and outputs the morse code equivalent
+ * if it is valid then loops or exits.
+ * Valid input contains only alphanumeric characters (i.e. A-Z, a-z and 0-9).
+ *
+ */
+
 #include <map>
 #include <string>
 #include <iostream>
