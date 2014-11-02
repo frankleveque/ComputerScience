@@ -18,6 +18,7 @@ int main()
 {
     std::map<char, std::string> morseMap;
 
+    //add morse symbols to map for each character
     morseMap['A'] = ".-";
     morseMap['B'] = "-...";
     morseMap['C'] = "-.-.";
@@ -63,6 +64,7 @@ int main()
     std::string input;
     std::string output;
 
+    //loop
     while(isRunning) {
         input = "";
         output = "";
@@ -71,6 +73,7 @@ int main()
         std::cout << "String Input (\"%\" to exit): ";
         std::cin >> input;
 
+        //exit test
         if(input == "%") {
             isRunning = false;
             break;
