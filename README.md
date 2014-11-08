@@ -24,3 +24,5 @@ packaging.
 - Classes always begin with a capital and use camel case.
 - No tabs, only spaces
 - 4 spaces per indent
+- Commit messages use the imperative present tense
+    - "change" not "changed" or "changes"
