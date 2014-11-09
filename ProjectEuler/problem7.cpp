@@ -1,9 +1,3 @@
-/*
-########
-#
-
-########
-*/
 /**
  * @file
  * @author Frank Leveque
