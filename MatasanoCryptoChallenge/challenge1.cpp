@@ -24,8 +24,8 @@
 
 #include <string>
 #include <iostream>
-#include "b64converter.hpp"
-#include "hexconverter.hpp"
+#include <b64converter.hpp>
+#include <hexconverter.hpp>
 
 int main()
 {
