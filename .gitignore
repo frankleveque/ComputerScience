@@ -140,3 +140,5 @@ Temporary Items
 Doxyfile
 *.cbp
 *.depend
+*.layer
+*/doc/*
