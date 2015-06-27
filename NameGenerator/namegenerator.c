@@ -1,4 +1,3 @@
-#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -9,69 +8,67 @@ char getFirstLetter()
 {
     seed+=(time(NULL)+seed)*3+time(NULL);
     srand(seed);
-    
     int chance = rand() % 106;
     if(chance < 12)
-        return 'a';
+        return 'A';
     else if(chance < 17)
-        return 'b';
+        return 'B';
     else if(chance < 21)
-        return 'c';
+        return 'C';
     else if(chance < 24)
-        return 'd';
+        return 'D';
     else if(chance < 26)
-        return 'e';
+        return 'E';
     else if(chance < 30)
-        return 'f';
+        return 'F';
     else if(chance < 32)
-        return 'g';
+        return 'G';
     else if(chance < 39)
-        return 'h';
+        return 'H';
     else if(chance < 45)
-        return 'i';
+        return 'I';
     else if(chance < 46)
-        return 'j';
+        return 'J';
     else if(chance < 47)
-        return 'k';
+        return 'K';
     else if(chance < 50)
-        return 'l';
+        return 'L';
     else if(chance < 54)
-        return 'm';
+        return 'M';
     else if(chance < 56)
-        return 'n';
+        return 'N';
     else if(chance < 62)
-        return 'o';
+        return 'O';
     else if(chance < 65)
-        return 'p';
+        return 'P';
     else if(chance < 66)
-        return 'q';
+        return 'Q';
     else if(chance < 68)
-        return 'r';
+        return 'R';
     else if(chance < 76)
-        return 's';
+        return 'S';
     else if(chance < 93)
-        return 't';
+        return 'T';
     else if(chance < 94)
-        return 'u';
+        return 'U';
     else if(chance < 95)
-        return 'v';
+        return 'V';
     else if(chance < 102)
-        return 'w';
+        return 'W';
     else if(chance < 103)
-        return 'x';
+        return 'X';
     else if(chance < 105)
-        return 'y';
+        return 'Y';
     else if(chance < 106)
-        return 'z';
-    else
-        return '-';
+        return 'Z';
+    else 
+        return ' ';
 }
 
 char getLetter()
 {
     seed+=(time(NULL)+seed)*3+time(NULL);
     srand(seed);
-
     int chance = rand() % 104;
     if(chance < 14)
         return 'e';
@@ -126,38 +123,33 @@ char getLetter()
     else if(chance < 104)
         return 'z';
     else
-        return '-';
+        return ' ';
 }
 
 int main()
 {
     time_t now = time(NULL);
-
     seed+=(time(NULL)+seed)*3+time(NULL);
     srand(seed);
-
-    int sections = (rand() % 4) + 4;
+    int letters = (rand() % 4) + 4;
     char finalName[100] = {0};
 
     int i=0;
-    while(i < sections){
+    while(i < letters){
         if(i==0){
             finalName[0] = getFirstLetter();
         }else{
-            seed+=(time(NULL)+seed)*3+time(NULL);
-            srand(seed);
-            char temp[10] = {0};
+            char temp[2] = {0};
             sprintf(temp,"%c",getLetter());
             strcat(finalName, temp);
         }
-            i++;
+        i++;
     }
     while(1){
         if(difftime(now, time(NULL)))
             break;
     }
     printf("%s",finalName);
-
 }
 
 
