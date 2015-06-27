@@ -71,7 +71,7 @@ int main()
         isValid = true;
 
         std::cout << "String Input (\"%\" to exit): ";
-        std::cin >> input;
+        std::getline(std::cin, input);
 
         //exit test
         if(input == "%") {
@@ -84,10 +84,12 @@ int main()
             if(morseMap.count(toupper(input[i])) > 0) {
                 output.append(morseMap.find(toupper(input[i]))->second);
                 output.append(" ");
-            } else {
+            } else if(input[i] == ' ')
+                output.append(" ");
+            else {
                 std::cout << "Invalid character found - ignoring input" <<
-                std::endl << "(only A-Z, a-z, and 0-9 work in this generator)" <<
-                std::endl << std::endl;
+                    std::endl << "(only A-Z, a-z, and 0-9 work in this generator)" <<
+                    std::endl << std::endl;
                 isValid = false;
                 break;
             }
