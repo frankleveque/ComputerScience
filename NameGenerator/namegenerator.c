@@ -1,3 +1,5 @@
+#include <time.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -128,6 +130,7 @@ char getLetter()
 
 int main()
 {
+
     time_t now = time(NULL);
     seed+=(time(NULL)+seed)*3+time(NULL);
     srand(seed);
@@ -145,11 +148,12 @@ int main()
         }
         i++;
     }
+
     while(1){
         if(difftime(now, time(NULL)))
             break;
     }
-    printf("%s",finalName);
+    printf("%s\n",finalName);
 }
 
 
