@@ -42,10 +42,6 @@ void TrieNode::add(const std::string& str)
 bool TrieNode::contains(const std::string& str)
 {
     int index = (int) str[0];
-    //index-= 97;
-
-   // if(index < 0 || index > 25)
-    //    return false;
 
     if(children[index] == NULL)
         return false;
@@ -55,7 +51,7 @@ bool TrieNode::contains(const std::string& str)
         children[index]->contains(sub);
     if(sub.size() == 0)
         return true;
-
+    return false;
 }
 
 
