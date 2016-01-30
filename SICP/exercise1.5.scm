@@ -1,5 +1,3 @@
-#lang planet neil/sicp  ;allows for full Racket and SICP compatibility
-
 (define (p) 0)
 
 (define (test x y)

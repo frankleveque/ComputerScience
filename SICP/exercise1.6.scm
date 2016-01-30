@@ -1,5 +1,3 @@
-#lang planet neil/sicp  ;allows for full Racket and SICP compatibility
-
 (define (abs x)
   (cond ((< x 0) (- x))
         (else x)))
