@@ -13,6 +13,7 @@
 #include <iostream>
 #include <cctype>
 #include <cstdlib>
+#include <cstdint>
 
 int main()
 {
@@ -79,7 +80,7 @@ int main()
             break;
         }
 
-        for(int i=0; i<input.length(); ++i) {
+        for(uint32_t i=0; i<input.length(); ++i) {
             //count() checks if char exists in map
             if(morseMap.count(toupper(input[i])) > 0) {
                 output.append(morseMap.find(toupper(input[i]))->second);
@@ -96,7 +97,7 @@ int main()
         }
 
         if(isValid) {
-            std::cout << "Morse Output: " <<  output << std::endl << std::endl;
+            std::cout << "Morse Output: " << std::endl << output << std::endl << std::endl;
         }
     }
     return EXIT_SUCCESS;
