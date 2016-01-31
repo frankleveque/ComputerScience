@@ -150,10 +150,12 @@ int main()
     }
 
     while(1){
-        if(difftime(now, time(NULL)))
+        if(difftime(now, time(NULL)) < 1)
             break;
     }
     printf("%s\n",finalName);
+
+    return 0;
 }
 
 
