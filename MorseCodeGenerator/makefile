@@ -10,7 +10,7 @@ SRC=morsecodegenerator.cpp
 
 .PHONY: all clean prepare
 targets:
-	@echo "targets: debug release clean"
+	@echo "targets: all debug release clean"
 	@echo "compilers: (CC=g++) gcc, g++, clang, clang++"
 
 all: debug release
