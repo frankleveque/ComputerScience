@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -fno-exceptions \
+CFLAGS=-std=c89 -Wall -Wextra -fno-exceptions \
 -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align \
 -Wwrite-strings -Wcast-qual -Wswitch-default \
 -Wswitch-enum -Wunreachable-code \
