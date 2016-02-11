@@ -1,4 +1,4 @@
-package datastructures;
+package DataStructures;
 
 /** 
  * Implements a stack data structure from a double linked list, 
@@ -12,7 +12,7 @@ public class Stack extends DoubleLinkedList {
         if(head==null)
             return null;
 
-        return tail.obj;
+        return tail.getData();
     }
 
     public Object pop(){
@@ -23,6 +23,6 @@ public class Stack extends DoubleLinkedList {
     }
 
     public void push(Object elem){
-        addBack(new Node(elem));
+        addBack(new DoubleNode(elem));
     }
 }

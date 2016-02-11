@@ -1,19 +1,4 @@
-package datastructures;
-
-/** 
- * A node object with head and tail references for use in linked lists.
- * @author Frank Leveque
- * @creator Frank Leveque
- */
-class Node{
-    Object obj = null;
-    public Node previous = null;
-    public Node next = null;
-
-    public Node(Object obj) {
-        this.obj = obj;
-    }
-}
+package DataStructures;
 
 /** 
  * Data structure comprised of nodes that can be traversed backwards
@@ -23,35 +8,35 @@ class Node{
  */
 public class DoubleLinkedList{
 
-    public Node head = null;
-    public Node tail = null;
+    public DoubleNode head = null;
+    public DoubleNode tail = null;
 
-    public void addFront(Node node){
-        if (head==null){
+    protected void addFront(DoubleNode node){
+        if (head == null){
             head = node;
             tail = head;
         } else{
-            Node temp = node;
-            head.previous = temp;
-            temp.next = head;
-            head = temp;
+            //DoubleNode temp = node;
+            head.previous = node;
+            node.next = head;
+            head = node;
         }
     } 
 
-    public void addBack(Node node){
+    protected void addBack(DoubleNode node){
         if (head==null){
             head = node;
             tail = head;
         }else{
-            Node temp = node;
+            DoubleNode temp = node;
             tail.next = temp;
             temp.previous = tail;
             tail = temp;
         }
     } 
 
-    public Object removeNode(Node node){
-        Object temp = node.obj;
+    protected Object removeNode(DoubleNode node){
+        Object temp = node.getData();
         if(head==null)
             return null;
         else if(head==tail && head!= null){
@@ -74,11 +59,11 @@ public class DoubleLinkedList{
         }
     }
 
-    public Object removeFirst(){
+    protected Object removeFirst(){
         return removeNode(head);
     }
 
-    public Object removeLast(){
+    protected Object removeLast(){
         return removeNode(tail);
     }
 
@@ -87,10 +72,10 @@ public class DoubleLinkedList{
             return;
         }
         else{
-            Node currentNode = head;
+            DoubleNode currentNode = head;
             while(currentNode != null)
             {
-                System.out.println(currentNode.obj);
+                System.out.println(currentNode.getData());
                 currentNode = currentNode.next;
             }
         }
@@ -101,10 +86,10 @@ public class DoubleLinkedList{
             return;
         }
         else{
-            Node currentNode = tail;
+            DoubleNode currentNode = tail;
             while(currentNode != null)
             {
-                System.out.println(currentNode.obj);
+                System.out.println(currentNode.getData());
                 currentNode = currentNode.previous;
             }
         }
