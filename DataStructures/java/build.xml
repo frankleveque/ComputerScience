@@ -1,0 +1,42 @@
+<project 
+    name = "DataStructures"
+    default = "targets"
+    basedir = "."
+    > <!-- xmlns="antlib:org.apache.tools.ant" -->
+
+    <property name="lib" value="./lib" />
+    <property name="classdir" value="./classes"/>
+    <property name="srcdir" value="./src"/>
+
+    <path id="javaclasspath">
+        <pathelement location="${classdir}"/>
+        <!-- <pathelement path="${lib}/json.jar"/> -->
+    </path>
+
+    <target name="targets">
+        <echo message="targets are prepare clean build execute" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${classdir}" failonerror="false"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${classdir}"/>
+    </target>
+
+    <target name="build" depends="prepare">
+        <javac srcdir="${srcdir}"
+            includeantruntime="false"
+            destdir="${classdir}">
+            <classpath refid="javaclasspath"/>
+        </javac>
+    </target>
+
+    <target name="execute" depends="build">
+        <java classname="StackTest" fork="yes">
+            <classpath refid="javaclasspath"/>
+        </java>
+    </target>
+
+</project>
