@@ -1,0 +1,8 @@
+CC=gcc
+FILES=
+FLAGS= -std=c+11
+FILENAME=application.exe
+
+.PHONY: all 
+all: $(DEPS)
+	$(CC) $(FLAGS) $(FILES) -o $(FILENAME)
