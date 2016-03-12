@@ -1,0 +1,94 @@
+#
+# Makefile that uses .cpp files from ./src and .h files from ./include 
+# and separates object files out to their respective folders before linking
+#
+
+CC=g++
+CFLAGS=-std=c++11 -Wall -Wextra -fno-exceptions \
+-Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align \
+-Wwrite-strings -Wcast-qual -Wswitch-default \
+-Wswitch-enum -Wconversion -Wunreachable-code \
+-Wuninitialized -Winit-self -march=native -Wfatal-errors -Werror -I$(IDIR)
+
+FILENAME=application.exe
+
+IDIR=include
+SDIR=src
+ODIR=obj
+LDIR=lib
+LIBS=
+
+_HEADERS=
+HEADERS=$(patsubst %,$(IDIR)/%,$(_HEADERS))
+
+_SRC=
+SRC=$(patsubst %,$(SDIR)/%,$(_SRC))
+
+_OBJ= 
+OBJ_DEB=$(patsubst %, $(ODIR)/debug/%, $(_OBJ))
+OBJ_REL=$(patsubst %, $(ODIR)/release/% ,$(_OBJ))
+
+.PHONY: all clean debug release 
+
+targets: 
+	@echo "Specify target: debug release clean"
+	@echo " "
+	@echo "Specify compiler: CC=gcc, g++(default), clang, clang++"
+	@echo " "
+	@echo "NOTE: Requires standard unix/linux commands"
+	@echo "      -Can be emulated on windows with Mingw/MSYS"
+	@echo " "
+
+$(ODIR)/debug/%.o: $(SDIR)/%.cpp $(HEADERS) 
+	@echo $< " -> " $@
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+
+$(ODIR)/release/%.o: $(SDIR)/%.cpp $(HEADERS)
+	@echo $< " -> " $@
+	@$(CC) $(CFLAGS) -c $< -o $@ 
+
+prepare: bin/release bin/debug obj/release obj/debug 
+
+bin: 
+	@mkdir -p $@ 
+
+bin/debug: bin
+	@mkdir -p $@ 
+
+bin/release: bin
+	@mkdir -p $@ 
+
+obj:
+	@mkdir -p $@ 
+
+obj/debug: obj
+	@mkdir -p $@ 
+	
+obj/release: obj
+	@mkdir -p $@ 
+
+bin/debug/$(FILENAME): $(OBJ_DEB)
+	@echo "Building Debug target - " $(CC)
+	@$(CC) -g $(CFLAGS) $^ $(LIBS) -o $@
+	@echo "Done"
+
+bin/release/$(FILENAME): $(OBJ_REL)
+	@echo "Building Release target - " $(CC)
+	@$(CC) -s $(CFLAGS) $^ $(LIBS) -o $@
+	@echo "Done"
+
+debug: bin/debug obj/debug bin/debug/$(FILENAME) 
+
+release: bin/release obj/release bin/release/$(FILENAME) 
+
+all: debug release
+
+clean:
+	@echo "Cleaning"
+	@rm -rf ./obj/
+	@rm -rf ./bin/
+	@rm -f *.depend
+	@rm -f *.layout
+	@echo "Done"
+
+
