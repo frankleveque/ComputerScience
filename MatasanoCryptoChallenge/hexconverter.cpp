@@ -18,10 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
-#include <hexconverter.hpp>
+#include "hexconverter.hpp"
 #include <bitset>
 #include <iostream>
 #include <cstring>
+
+
 
 HexConverter::HexConverter()
 {
@@ -146,7 +148,8 @@ std::string HexConverter::decodeFromHex(char const* input)
     size_t current_size = 0;
 
     char buffer [0];
-
+    
+    std::vector<bool> bits;
 
     for(unsigned int i=0; i<strlen(input); ++i) {
         std::bitset<4> holding(findHex(input[i]));

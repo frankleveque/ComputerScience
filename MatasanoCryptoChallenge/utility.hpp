@@ -44,6 +44,20 @@ inline std::string strXor(std::string &a, std::string &b)
     return temp;
 }
 
+//! fixed xor of two strings
+inline std::string strXor(std::string &&a, std::string &&b)
+{
+    if(a.length() != b.length()){
+    return "Error";
+    }
+
+    std::string temp;
+    for(unsigned i = 0; i < a.length(); ++i){
+        temp += a[i] ^ b[i];
+    }
+    return temp;
+}
+
 inline std::string bufferXor(char const* a, char const* b)
 {
 

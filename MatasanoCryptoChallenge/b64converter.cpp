@@ -18,10 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
-#include <b64converter.hpp>
+#include "b64converter.hpp"
 #include <bitset>
 #include <vector>
-#include <utility.hpp>
+#include "utility.hpp"
 
 Base64Converter::Base64Converter()
 {
