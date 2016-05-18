@@ -6,9 +6,19 @@
 
 long seed = LONG_MAX;
 
+
+
+void reseed(){
+
+    seed+=(time(NULL)+seed)*3+time(NULL);
+
+}
+
+
+
 char getFirstLetter()
 {
-    seed+=(time(NULL)+seed)*3+time(NULL);
+    reseed();
     srand(seed);
     int chance = rand() % 106;
     if(chance < 12)
@@ -69,7 +79,7 @@ char getFirstLetter()
 
 char getLetter()
 {
-    seed+=(time(NULL)+seed)*3+time(NULL);
+    reseed();
     srand(seed);
     int chance = rand() % 104;
     if(chance < 14)
@@ -131,29 +141,35 @@ char getLetter()
 int main()
 {
 
-    time_t now = time(NULL);
-    seed+=(time(NULL)+seed)*3+time(NULL);
-    srand(seed);
-    int letters = (rand() % 4) + 4;
-    char finalName[100] = {0};
 
-    int i=0;
-    while(i < letters){
-        if(i==0){
-            finalName[0] = getFirstLetter();
-        }else{
-            char temp[2] = {0};
-            sprintf(temp,"%c",getLetter());
-            strcat(finalName, temp);
-        }
-        i++;
-    }
+    time_t old = time(NULL);
 
     while(1){
-        if(difftime(now, time(NULL)) < 1)
-            break;
+
+        reseed();
+        srand(seed);
+        int letters = (rand() % 6) + 2;
+        char finalName[100] = {0};
+
+        int i=0;
+        while(i < letters){
+            if(i==0){
+                finalName[0] = getFirstLetter();
+            }else{
+                char temp[2] = {0};
+                sprintf(temp,"%c",getLetter());
+                strcat(finalName, temp);
+            }
+            i++;
+        }
+
+
+        while(difftime(time(NULL), old) < 1){
+        
+        }
+        printf("%s\n",finalName);
+        old = time(NULL);
     }
-    printf("%s\n",finalName);
 
     return 0;
 }
