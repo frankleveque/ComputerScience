@@ -1,6 +1,5 @@
 CC=g++
-CFLAGS=-std=c++11 -s -O3
-HEADERS=hexconverter.hpp b64converter.hpp
+CFLAGS=-std=c++11 
 ODIR=obj
 
 .PHONY: all clean 
@@ -12,7 +11,7 @@ bin:
 	@mkdir -p bin
 
 bin/unittests.exe: unittests.cpp hexconverter.cpp b64converter.cpp | bin
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage $^ -o $@
 
 bin/challenge1.exe: challenge1.cpp hexconverter.cpp b64converter.cpp | bin
 	$(CC) $(CFLAGS) $^ -o $@

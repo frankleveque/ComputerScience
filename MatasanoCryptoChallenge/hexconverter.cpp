@@ -21,7 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "hexconverter.hpp"
 #include <bitset>
 #include <iostream>
-#include <cstring>
+#include <string>
+#include <cctype>
+#include <cassert>
 
 
 
@@ -103,10 +105,11 @@ std::string HexConverter::encoder(const std::string &input)
 int HexConverter::findHex(char hexval)
 {
     for(unsigned int i=0; i<hexTable.size(); ++i) {
-        if(hexTable[i] == hexval) {
+        if(std::tolower(hexTable[i]) == std::tolower(hexval)) {
             return i;
         }
     }
+    assert(false);
     return -1;
 }
 
@@ -122,7 +125,10 @@ std::string HexConverter::decodeFromHex(const std::string &input)
             bits.push_back(holding[j]);
         }
     }
-
+    bits.shrink_to_fit();
+    while(bits.size() < 8)
+        bits.insert(bits.begin(), 1, 0);
+    
     for(unsigned int k=0; k<bits.size(); k+=8) {
         std::bitset<8> whole(0);
 
@@ -134,14 +140,15 @@ std::string HexConverter::decodeFromHex(const std::string &input)
         whole[2] = bits[k+5];
         whole[1] = bits[k+6];
         whole[0] = bits[k+7];
+        //ss << static_cast<uint32_t>(whole.to_ulong());
 
-        ss<< static_cast<char>(whole.to_ulong());
+        ss << whole.to_ulong();
     }
     return ss.str();
 }
 
 
-
+/*
 //! convert from hex to ascii
 std::string HexConverter::decodeFromHex(char const* input)
 {
@@ -173,4 +180,4 @@ std::string HexConverter::decodeFromHex(char const* input)
         ss<< static_cast<char>(whole.to_ulong());
     }
     return ss.str();
-}
+}*/

@@ -38,7 +38,7 @@ public:
     std::string encodeIntoLowerCase(const std::string &input);
     std::string encodeIntoUpperCase(const std::string &input);
     std::string decodeFromHex(const std::string &input);
-    std::string decodeFromHex(char const* input);
+//std::string decodeFromHex(char const* input);
 
 };
 #endif
