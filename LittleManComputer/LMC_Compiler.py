@@ -46,12 +46,10 @@ opCodes['dat'] = None
 memory = ["0"] * 100
 labels = {}
 
+ 
 
 def fixInstructions(instructions):
-    '''
-    instructions is list of strings representing instructions 
-    '''
-    
+
     if not instructions:
         return
     initial = len(instructions)
@@ -61,62 +59,72 @@ def fixInstructions(instructions):
         for j in range(len(instructions[i])):
             instructions[i][j] = instructions[i][j].lower()
 
-        
-    ops = ['dat', 'data']
     # massage inputs
     for i in range(len(instructions)):
         if len(instructions[i]) == 1:
-            print instructions[i],"|1"
-            instructions[i] += [0] 
-        elif (len(instructions[i]) == 2 and 
-            any( op == instructions[i][0] for op in ops)):
-            print instructions[i],"|2"
-            pass #instructions[i] += [0 
+            instructions[i] = [None] + instructions[i] + ["0"] 
 
-        elif (len(instructions[i]) == 2 and 
-            any( op != instructions[i][0] for op in ops)):
-            print instructions[i],"|2"
-            instructions[i] += [0] 
+        elif (len(instructions[i]) == 2 and instructions[i][0] in opCodes):
+            instructions[i] = [None] + instructions[i]
+
+        elif (len(instructions[i]) == 2 and not (instructions[i][0] in opCodes)):
+            instructions[i] += ["0"] 
         
     # check
     for i in range(len(instructions)):
         assert len(instructions[i]) >= 2
+        assert instructions[i][0] not in opCodes
+        assert instructions[i][1] in opCodes
     
     assert len(instructions[:]) == initial
     return instructions
 
 
-def replaceLabels(instructions):
-    
-    for i in range(len(instructions)):
-        if len(instructions[i]) == 3:
-            possible = instructions[i][0]
-            if possible not in opCodes.keys():
-                #defining keyword
-                if possible not in labels.keys():
-                    labels[instructions[i][0]] = i
-                else:
-                    print "label [" + possible + "] already defined"
-            # remove declaration index
-            instructions[i] = instructions[i][1:]
-    
+def stripLabels(instructions):
    
-    
+    # strip definitions 
     for i in range(len(instructions)):
-        for j in range(len(instructions[i])):
-            if (instructions[i][j] not in opCodes.keys() and 
-            not str(instructions[i][j]).isdigit()):
+        assert len(instructions[i]) == 3
+       
+    
+        first = instructions[i][0]
+        if first:
+            #defining keyword
+            if first not in labels.keys():
+                labels[instructions[i][0]] = str(i)
+            else:
+                print "Warning: Label [" + first + "] already defined"
+        
+                    
+        # remove first index
+        instructions[i] = instructions[i][1:]
+
+        assert len(instructions[i]) == 2
+
+        # 2 elements - second is label
+        second = instructions[i][1]
+        if second.isalpha() and second not in labels:
+            print "Warning: Label [" + second + "] not defined anywhere - using mailbox 99"
+            labels[second] = "99"
+            instructions[i][1] = "99" 
+  
+
+        for i in range(len(instructions)):
+            for j in range(len(instructions[i])):
+
                 try:
-                    instructions[i][j] = labels[instructions[i][j]]
+                    if (instructions[i][j] not in opCodes.keys() and not str(instructions[i][j]).isdigit()):
+                        instructions[i][j] = labels[instructions[i][j]]
+
                 except KeyError:
                     print "label [" + str(instructions[i][j]) + "]" + " not defined"
+   
+        
 
 
     # check
     for i in range(len(instructions)):
         assert len(instructions[i]) == 2
-
-
 
     return instructions
 
@@ -127,15 +135,24 @@ def compileInstruction(instruction):
     [OP] [Mailbox/Value]
     '''
     assert len(instruction) <= 3 
-    assert instruction[0].isalpha() 
+    try:
+        assert instruction[0].isalpha() 
+    except AssertionError:
+        print "+++++++++++",instruction[0],"+++++++++++"
+
     
     op = None
     box = None
     try:
         op = instruction[0]
         opcode = opCodes[op]
-        box = int(instruction[1])
+        box = instruction[1]
         
+        if isinstance(box,int):
+            box = int(box)
+        elif box.isalpha():
+            box = labels[box]
+
 
         if (op == 'hlt' or op == 'halt' or op == 'inp' or op == 'input'):
             return opcode
@@ -145,7 +162,7 @@ def compileInstruction(instruction):
             return opcode + int(box)
            
     except KeyError:
-           print "Opcode not defined - returning HLT"
+           print "Warning: Opcode not defined " + str(op) + " - returning HLT"
            return 0
  
 
@@ -153,11 +170,11 @@ def compileInstruction(instruction):
 
 
 if __name__ == "__main__":
+    
 
     if len(sys.argv) < 2:
         print "Needs input file(s)"
         sys.exit(0)
-    
 
     for a in sys.argv[1:]:
         
@@ -175,32 +192,20 @@ if __name__ == "__main__":
 
 
 
-        print instructions 
         instructions = fixInstructions(instructions)
-        print "Fixed"
-        for p in instructions:
-            for s in p:
-                print("{0:<15}".format(s)),
-            print("")
-        print("")
-        instructions = replaceLabels(instructions)
-        print "Replaced"
-        for p in instructions:
-            for s in p:
-                print("{0:<15}".format(s)),
-            print("")
-        print("")
-
-        print ""
+        instructions = stripLabels(instructions)
         print "Compiled:"
         for p in instructions:
-            for s in p:
-                print("{0:<15}".format(s)),
-            print("")
-        print("")
+            for j in p:
+                print j,
+            print ""
+        print ""
+        
+        
         
         for i in range(len(instructions)):
             memory[i] = "%.03i" % compileInstruction(instructions[i])
+
 
         assert len(memory) == 100
   
@@ -214,5 +219,6 @@ if __name__ == "__main__":
 
 else:
     pass
+
 
 
