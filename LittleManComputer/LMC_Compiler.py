@@ -22,38 +22,28 @@ import re
 opCodes = {}
 opCodes['add'] = 100
 opCodes['sub'] = 200
-
 opCodes['sta'] = 300
 opCodes['store'] = 300
-
 opCodes['load'] = 500
 opCodes['lda'] = 500
-
 opCodes['branch'] = 600
 opCodes['bra'] = 600
-
 opCodes['branchzero'] = 700
 opCodes['brz'] = 700
-
 opCodes['branchpositive'] = 800
 opCodes['brp'] = 800
-
 opCodes['input'] = 901
 opCodes['inp'] = 901
-
 opCodes['output'] = 902
 opCodes['out'] = 902
-
 opCodes['halt'] = 000
 opCodes['hlt'] = 000
 opCodes['coffee'] = 000
 opCodes['coffeebreak'] = 000
-
 opCodes['data'] = None
 opCodes['dat'] = None
 
-
-memory = ["NULL"] * 100
+memory = ["0"] * 100
 labels = {}
 
 
@@ -125,77 +115,32 @@ def replaceLabels(instructions):
 
 
 
-def compileInstruction(instruction, line):
+def compileInstruction(instruction):
     '''
-    [LABEL] [OP] [Mailbox/Value]
-    MYLABEL DAT 444
-    DAT 444
-    LOOP BRZ END
-    END HLT
+    [OP] [Mailbox/Value]
     '''
     assert len(instruction) <= 3 
     assert instruction[0].isalpha() 
-   
-
-    parts = len(instruction)
-
-    #make all lowercase
-    ins = instruction[:]
-    print ins
-    for i in range(len(ins)):
-        ins[i] = ins[i].lower()
-    print ins
     
-    if ins[0] == 'inp' or ins[0] == 'input' or ins[0] == 'hlt' or ins[0] == 'halt':
-        ins += [0]
-        parts += 1
-    ''' 
-    op = ins[-1]
-    if parts < 3 and (op == 'dat' or op == 'data'):
-        ins += [0]
-        parts += 1
-
-    
-    op = ins[0]
-    if parts == 1 and (op == 'hlt' or op == 'halt'):
-        ins += [0]
-        parts += 1
-    '''
-
     op = None
     box = None
-    label = None
     try:
-        if parts == 2: #nolabel   [op] [box]
-            label = None
-            op = ins[0].lower()
-            box = ins[1]
-        
-            if isinstance(box, int):
-                return opCodes[op] + box
-            else:
-                return opCodes[op] + labels[box.lower()]
-        elif parts == 3:  #label      [new label] [op] [box|toLabel]
-            label = ins[0].lower()
-            op = ins[1].lower()
-            box = int(ins[2])
-
-
-            labels[label] = line
-            
-            if opCodes[op] == None:
-                return box
-            
-            return opCodes[op] + box
+        op = instruction[0]
+        opcode = opCodes[op]
+        box = int(instruction[1])
         
 
+        if (op == 'hlt' or op == 'halt' or op == 'inp' or op == 'input'):
+            return opcode
+        elif (op == 'dat' or op == 'data'):
+            return int(box)
         else:
-            pass
-        
+            return opcode + int(box)
+           
     except KeyError:
-           print "Label not defined " 
-           print repr(labels), label, op, box, "|", parts
-           return "ERR"
+           print "Opcode not defined - returning HLT"
+           return 0
+ 
 
 
 
@@ -229,13 +174,19 @@ if __name__ == "__main__":
         print instructions
         print ""
         instructions = replaceLabels(instructions)
-        for p in instructions:
-            print(p)
         print ""
+        print "Compiled:"
+        for p in instructions:
+            for s in p:
+                print("{0:<15}".format(s)),
+            print("")
+        print("")
         
-        #instructions = compileInstructions(instructions)
+        for i in range(len(instructions)):
+            memory[i] = "%.03i" % compileInstruction(instructions[i])
 
-
+        assert len(memory) == 100
+  
 
 
         with open(a+'.lmc', 'w+') as out:
