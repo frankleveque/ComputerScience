@@ -65,12 +65,19 @@ def fixInstructions(instructions):
     ops = ['dat', 'data']
     # massage inputs
     for i in range(len(instructions)):
-        if (len(instructions[i]) == 1 or 
-            (len(instructions[i]) == 2 and 
-            any( op in instructions[i] for op in ops))):
+        if len(instructions[i]) == 1:
+            print instructions[i],"|1"
             instructions[i] += [0] 
+        elif (len(instructions[i]) == 2 and 
+            any( op == instructions[i][0] for op in ops)):
+            print instructions[i],"|2"
+            pass #instructions[i] += [0 
 
-
+        elif (len(instructions[i]) == 2 and 
+            any( op != instructions[i][0] for op in ops)):
+            print instructions[i],"|2"
+            instructions[i] += [0] 
+        
     # check
     for i in range(len(instructions)):
         assert len(instructions[i]) >= 2
@@ -169,11 +176,21 @@ if __name__ == "__main__":
 
 
         print instructions 
-        print ""
         instructions = fixInstructions(instructions)
-        print instructions
-        print ""
+        print "Fixed"
+        for p in instructions:
+            for s in p:
+                print("{0:<15}".format(s)),
+            print("")
+        print("")
         instructions = replaceLabels(instructions)
+        print "Replaced"
+        for p in instructions:
+            for s in p:
+                print("{0:<15}".format(s)),
+            print("")
+        print("")
+
         print ""
         print "Compiled:"
         for p in instructions:
