@@ -12,6 +12,10 @@ enum class LMStates{
 
 };
 
+void dies(int inside){
+    printf("%.3u - %s %s.\n",inside,prefix.c_str(),"doesn't know what to do with this");
+    printf("      %s %s.\n",prefix.c_str(), "dies from stress");
+}
 
 
 int main(int argc, char* argv[]) 
@@ -84,8 +88,12 @@ int main(int argc, char* argv[])
                 }
             }
             else if(address == 2){
-                printf("%.3u - %s %s.\n",inside,prefix.c_str(),"writes the working value down on a piece of paper and places it in the outbox");
+                printf("%.3u - %s %s.\n",inside,prefix.c_str(),"puts a copy of the working value in the outbox");
                 printf("      %s %i\n", "Outbox: ", accumulator);
+            }
+            else{
+                dies(inside);
+                break;      
             }
         }
 //BRANCH IF POSITIVE---------------------------------------------------------------------------------------
@@ -122,34 +130,30 @@ int main(int argc, char* argv[])
             printf("%.3u - %s %s %u %s.\n",inside,prefix.c_str(),"takes the value in mailbox", address, "and sets it as the working value");
             accumulator = mailboxes[address];
         }
-
 //STORE----------------------------------------------------------------------------------------------------
-        else if(inside >= 300){
+        else if(inside >= 300 && inside < 400){
             printf("%.3u - %s %s %u.\n",inside,prefix.c_str(),"puts a copy of the working value in mailbox", address);
             mailboxes[address] = accumulator;
         }
-
 //SUBTRACT-------------------------------------------------------------------------------------------------
         else if(inside >= 200){
-            printf("%.3u - %s %s %u %s.\n",inside,prefix.c_str(),"subtracts the the value in mailbox", address, "from the working value");
+            printf("%.3u - %s %s %u %s.\n",inside,prefix.c_str(),"subtracts the value in mailbox", address, "from the working value");
             accumulator -= mailboxes[address];
         }
 //ADD------------------------------------------------------------------------------------------------------
         else if(inside >= 100){
-            printf("%.3u - %s %s %u %s.\n",inside,prefix.c_str(),"adds the the value in mailbox", address, "to the working value");
+            printf("%.3u - %s %s %u %s.\n",inside,prefix.c_str(),"adds the value in mailbox", address, "to the working value");
             accumulator += mailboxes[address];
         }
 //HALT-----------------------------------------------------------------------------------------------------
         else if(inside == 0){
             printf("%.3u - %s %s.\n",inside,prefix.c_str(),"goes on an indefinite coffee break");
-            printf("      %s \n","Program Halted");
             break;    
         }
 //???------------------------------------------------------------------------------------------------------
         else{
-            printf("%.3u - %s %s %s %s.\n",inside,prefix.c_str(),"doesn't know what to do with this.", prefix.c_str(), "dies from stress");
-            printf("      %s \n","Program Halted");
-            break;
+            dies(inside); 
+            break;    
         }
 
 //---------------------------------------------------------------------------------------------------------
@@ -158,6 +162,7 @@ int main(int argc, char* argv[])
 
     }
 
+    printf("      %s \n","Program Halted");
 
     return 0;
 
